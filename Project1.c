@@ -42,8 +42,8 @@ int     main(void)
     scanf("%d", &numElems);
     dPtr = malloc(numElems * sizeof(dPtr));
     puts("Here's a dynamic array of doubles...");
-    DumpMem(dPtr, numElems)
-    ???
+    FillMem(dPtr, numElems);
+    DumpMem(dPtr, numElems);
 
     // allocate a block of chars from the stack
     printf("How many chars? ");
@@ -111,8 +111,12 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 
 void    FillMem(void  *baseAddress, long  numBytes)
 {
-    ???
-
+	auto Byte* inputArray = baseAddress;
+	auto Byte* endArray = baseAddress + numBytes;
+    for(int index = 0; index < numBytes; index++)
+	{
+		*(inputArray + index) = rand();
+	}
 }  // end of "FillMem"
 
 
