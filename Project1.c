@@ -38,31 +38,35 @@ int     main(void)
     srand(time(NULL));
 
     // allocate a block of doubles from the stack
-    printf("How many doubles? ");
+    /*printf("How many doubles? ");
     scanf("%d", &numElems);
-    dPtr = malloc(numElems * sizeof(dPtr));
+    dPtr = (double*)malloc(numElems * sizeof(double));
     puts("Here's a dynamic array of doubles...");
     FillMem(dPtr, numElems);
-    DumpMem(dPtr, numElems);
+    DumpMem(dPtr, numElems);*/
 
     // allocate a block of chars from the stack
     printf("How many chars? ");
     scanf("%d", &numElems);
-    cPtr = malloc(numElems * sizeof(cPtr));
+    cPtr = malloc(numElems * sizeof(char));
+	printf("%d", sizeof(*cPtr));
 	puts("Here's a dynamic array of chars...");
-	???
-    ???
+	FillMem(cPtr, numElems * sizeof(char));
+    DumpMem(cPtr, numElems * sizeof(char));
 
     // allocate a block of ints from the stack
     printf("How many ints? ");
     scanf("%d", &numElems);
-    iPtr = malloc(numElems * sizeof(iPtr));
+    iPtr = malloc(numElems * sizeof(int));
+	printf("%d", sizeof(*iPtr));
     puts("Here's a dynamic array of ints...");
-    ???
-    ???
+    FillMem(iPtr, numElems * sizeof(int));
+    DumpMem(iPtr, numElems * sizeof(int));
 
     // release all allocated memory
-    ???
+    free(dPtr);
+	free(cPtr);
+	free(iPtr);
 
     return 0;
 
@@ -88,11 +92,60 @@ int     main(void)
 
 void    DumpMem(void  *baseAddress, long  numBytes)
 {
-	auto void* ptr;
-    ptr = malloc(numBytes * sizeof(baseAddress * numBytes))
+	auto Byte* inputArray = baseAddress;
+	auto Byte* endarray = baseAddress + numBytes;
+	
+	while(inputArray < endarray)
+	{
+		printf("%p  ", (void*)inputArray);
+		for(int i = 0; i < 16; i++)
+		{
+			if(inputArray < endarray)
+			{
+				printf(" %02X", *inputArray);
+				inputArray++;
+				if((i+1)%8 == 0)
+				{
+					printf(" ");
+				}
+			}
+			
+			else if(i < 16 || inputArray > endarray)
+			{ 
+				printf("   ");
+				*inputArray = 20;
+				if((i+1)%8 == 0)
+				{
+					printf(" ");
+				}
+				inputArray++;
+			}
+		}
+
+		inputArray -= 16;
+		printf(" |");
+		for(int charNum = 0; charNum < 16; charNum++)
+		{
+			if(isalpha(*inputArray) || isdigit(*inputArray) || ispunct(*inputArray))
+			{
+				printf("%c ", *inputArray);
+			}
+			else if(inputArray < endarray)
+			{
+				printf(". ");
+			}
+			else
+			{
+				printf("  ");
+			}
+			
+			inputArray++;
+		}
+		printf("|\n");
+	}
+	puts("\n");
 
 }  // end of "DumpMem"
-
 
 // ==== FillMem ===============================================================
 //
@@ -111,12 +164,15 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 
 void    FillMem(void  *baseAddress, long  numBytes)
 {
+	srand(time(NULL));
 	auto Byte* inputArray = baseAddress;
-	auto Byte* endArray = baseAddress + numBytes;
+
+	//auto Byte* endArray = baseAddress + numBytes;
     for(int index = 0; index < numBytes; index++)
 	{
 		*(inputArray + index) = rand();
-	}
+	 }
 }  // end of "FillMem"
 
 
+	//printf("%d", sizeof(*cPtr));
