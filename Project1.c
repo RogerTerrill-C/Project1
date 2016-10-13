@@ -38,18 +38,17 @@ int     main(void)
     srand(time(NULL));
 
     // allocate a block of doubles from the stack
-    /*printf("How many doubles? ");
+    printf("How many doubles? ");
     scanf("%d", &numElems);
     dPtr = (double*)malloc(numElems * sizeof(double));
     puts("Here's a dynamic array of doubles...");
-    FillMem(dPtr, numElems);
-    DumpMem(dPtr, numElems);*/
+    FillMem(dPtr, numElems * sizeof(double));
+    DumpMem(dPtr, numElems * sizeof(double));
 
     // allocate a block of chars from the stack
     printf("How many chars? ");
     scanf("%d", &numElems);
-    cPtr = malloc(numElems * sizeof(char));
-	printf("%d", sizeof(*cPtr));
+    cPtr = (char*)malloc(numElems * sizeof(char));
 	puts("Here's a dynamic array of chars...");
 	FillMem(cPtr, numElems * sizeof(char));
     DumpMem(cPtr, numElems * sizeof(char));
@@ -57,8 +56,7 @@ int     main(void)
     // allocate a block of ints from the stack
     printf("How many ints? ");
     scanf("%d", &numElems);
-    iPtr = malloc(numElems * sizeof(int));
-	printf("%d", sizeof(*iPtr));
+    iPtr = (int*)malloc(numElems * sizeof(int));
     puts("Here's a dynamic array of ints...");
     FillMem(iPtr, numElems * sizeof(int));
     DumpMem(iPtr, numElems * sizeof(int));
@@ -103,35 +101,35 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 			if(inputArray < endarray)
 			{
 				printf(" %02X", *inputArray);
-				inputArray++;
 				if((i+1)%8 == 0)
 				{
 					printf(" ");
 				}
 			}
 			
-			else if(i < 16 || inputArray > endarray)
-			{ 
+			else if(i > 0)
+			{
 				printf("   ");
-				*inputArray = 20;
-				if((i+1)%8 == 0)
+				if((i+1)%8==0)
 				{
 					printf(" ");
 				}
-				inputArray++;
 			}
+			inputArray++;
 		}
 
 		inputArray -= 16;
 		printf(" |");
 		for(int charNum = 0; charNum < 16; charNum++)
 		{
-			if(isalpha(*inputArray) || isdigit(*inputArray) || ispunct(*inputArray))
+			if((isalpha(*inputArray) || isdigit(*inputArray) || ispunct(*inputArray)) && (inputArray < endarray))
 			{
 				printf("%c ", *inputArray);
+				//printf("%02X ", *inputArray);
 			}
 			else if(inputArray < endarray)
 			{
+				//printf("%02X ", *inputArray);
 				printf(". ");
 			}
 			else
