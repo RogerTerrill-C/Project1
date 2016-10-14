@@ -6,10 +6,10 @@
 // Class: CSCI 223 ("C Language for Mathematics and Science")
 // Time: TR 04:30am
 // Instructor: Mr. Edwards
-// Project: Random_Guess
+// Project: DumpMem
 //
 // Description: 
-//		This program is a quick exercise dealing with void pointers and dynamic
+//      This program is a quick exercise dealing with void pointers and dynamic
 // memory management. The main routine allocates blocks from the heap and has
 // their contents written to stdout via the DumpMem function, which writes out
 // data in a canonical hexadecimal dump.
@@ -50,7 +50,7 @@ int     main(void)
     printf("How many doubles? ");
     scanf("%d", &numElems);
     dPtr = (double*)malloc(numElems * sizeof(double));
-	TestMalloc(dPtr);
+    TestMalloc(dPtr);
     puts("Here's a dynamic array of doubles...");
     FillMem(dPtr, numElems * sizeof(double));
     DumpMem(dPtr, numElems * sizeof(double));
@@ -59,24 +59,24 @@ int     main(void)
     printf("How many chars? ");
     scanf("%d", &numElems);
     cPtr = (char*)malloc(numElems * sizeof(char));
-	TestMalloc(cPtr);
-	puts("Here's a dynamic array of chars...");
-	FillMem(cPtr, numElems * sizeof(char));
+    TestMalloc(cPtr);
+    puts("Here's a dynamic array of chars...");
+    FillMem(cPtr, numElems * sizeof(char));
     DumpMem(cPtr, numElems * sizeof(char));
 
     // allocate a block of ints from the stack
     printf("How many ints? ");
     scanf("%d", &numElems);
     iPtr = (int*)malloc(numElems * sizeof(int));
-	TestMalloc(iPtr);
+    TestMalloc(iPtr);
     puts("Here's a dynamic array of ints...");
     FillMem(iPtr, numElems * sizeof(int));
     DumpMem(iPtr, numElems * sizeof(int));
 
     // release all allocated memory
     free(dPtr);
-	free(cPtr);
-	free(iPtr);
+    free(cPtr);
+    free(iPtr);
 
     return 0;
 
@@ -102,62 +102,59 @@ int     main(void)
 
 void    DumpMem(void  *baseAddress, long  numBytes)
 {
-	auto Byte* inputArray = baseAddress;
-	auto Byte* endarray = baseAddress + numBytes;
-	
-	//Loop through malloc block only
-	while(inputArray < endarray)
-	{
-		//Display hex bytes
-		printf("%p  ", (void*)inputArray);
-		for(int i = 0; i < 16; i++)
-		{
-			if(inputArray < endarray)
-			{
-				printf(" %02X", *inputArray);
-				if((i+1)%8 == 0)
-				{
-					printf(" ");
-				}
-			}
-			
-			else if(i > 0)
-			{
-				printf("   ");
-				if((i+1)%8==0)
-				{
-					printf(" ");
-				}
-			}
-			inputArray++;
-		}
-		//Revert address back 16 bytes
-		inputArray -= 16;
-		
-		//Display chars of each byte if it is printable, esle print periods
-		printf(" |");
-		for(int charNum = 0; charNum < 16; charNum++)
-		{
-			if((isalpha(*inputArray) || isdigit(*inputArray) || ispunct(*inputArray)) && (inputArray < endarray))
-			{
-				printf("%c ", *inputArray);
-				//printf("%02X ", *inputArray);
-			}
-			else if(inputArray < endarray)
-			{
-				//printf("%02X ", *inputArray);
-				printf(". ");
-			}
-			else
-			{
-				printf("  ");
-			}
-			
-			inputArray++;
-		}
-		printf("|\n");
-	}
-	puts("\n");
+    auto Byte* inputArray = baseAddress;
+    auto Byte* endarray = baseAddress + numBytes;
+    
+    //Loop through malloc block only
+    while(inputArray < endarray)
+    {
+        //Display hex bytes
+        printf("%p  ", (void*)inputArray);
+        for(int i = 0; i < 16; i++)
+        {
+            if(inputArray < endarray)
+            {
+                printf(" %02X", *inputArray);
+                if((i+1)%8 == 0)
+                {
+                    printf(" ");
+                }
+            }
+            else if(i > 0)
+            {
+                printf("   ");
+                if((i+1)%8==0)
+                {
+                    printf(" ");
+                }
+            }
+            inputArray++;
+        }
+        //Revert address back 16 bytes
+        inputArray -= 16;
+        
+        //Display chars of each byte if it is printable, esle print periods
+        printf(" |");
+        for(int charNum = 0; charNum < 16; charNum++)
+        {
+            if((isalpha(*inputArray) || isdigit(*inputArray) || ispunct(*inputArray)) && (inputArray < endarray))
+            {
+                printf("%c ", *inputArray);
+            }
+            else if(inputArray < endarray)
+            {
+                printf(". ");
+            }
+            else
+            {
+                printf("  ");
+            }
+            
+            inputArray++;
+        }
+        printf("|\n");
+    }
+puts("\n");
 
 }  // end of "DumpMem"
 
@@ -178,20 +175,20 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 
 void    FillMem(void  *baseAddress, long  numBytes)
 {
-	srand(time(NULL));
-	auto Byte* inputArray = baseAddress;
+    srand(time(NULL));
+    auto Byte* inputArray = baseAddress;
     for(int index = 0; index < numBytes; index++)
-	{
-		*(inputArray + index) = rand();
-	 }
-}  // end of "FillMem"
+    {
+        *(inputArray + index) = rand();
+    }
+}   // end of "FillMem"
 
 
 void    TestMalloc(void *baseAddress)
 {
-	if(baseAddress == NULL)
-	{
-		printf("Malloc returned NULL");
-		exit(EXIT_FAILURE);
-	}
+    if(baseAddress == NULL)
+    {
+        printf("Malloc returned NULL");
+        exit(EXIT_FAILURE);
+    }
 }
