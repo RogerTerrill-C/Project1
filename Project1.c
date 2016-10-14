@@ -1,7 +1,15 @@
 // ============================================================================
 // File: dumpmem.c (Fall 2016)
 // ============================================================================
-// This program is a quick exercise dealing with void pointers and dynamic
+// Programmer: Roger Chicas-Terrill
+// Date: 10/04/2016
+// Class: CSCI 223 ("C Language for Mathematics and Science")
+// Time: TR 04:30am
+// Instructor: Mr. Edwards
+// Project: Random_Guess
+//
+// Description: 
+//		This program is a quick exercise dealing with void pointers and dynamic
 // memory management. The main routine allocates blocks from the heap and has
 // their contents written to stdout via the DumpMem function, which writes out
 // data in a canonical hexadecimal dump.
@@ -93,8 +101,10 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 	auto Byte* inputArray = baseAddress;
 	auto Byte* endarray = baseAddress + numBytes;
 	
+	//Loop through malloc block only
 	while(inputArray < endarray)
 	{
+		//Display hex bytes
 		printf("%p  ", (void*)inputArray);
 		for(int i = 0; i < 16; i++)
 		{
@@ -117,8 +127,10 @@ void    DumpMem(void  *baseAddress, long  numBytes)
 			}
 			inputArray++;
 		}
-
+		//Revert address back 16 bytes
 		inputArray -= 16;
+		
+		//Display chars of each byte if it is printable, esle print periods
 		printf(" |");
 		for(int charNum = 0; charNum < 16; charNum++)
 		{
@@ -164,13 +176,8 @@ void    FillMem(void  *baseAddress, long  numBytes)
 {
 	srand(time(NULL));
 	auto Byte* inputArray = baseAddress;
-
-	//auto Byte* endArray = baseAddress + numBytes;
     for(int index = 0; index < numBytes; index++)
 	{
 		*(inputArray + index) = rand();
 	 }
 }  // end of "FillMem"
-
-
-	//printf("%d", sizeof(*cPtr));
