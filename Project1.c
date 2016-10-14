@@ -24,6 +24,7 @@
 // function prototypes
 void    DumpMem(void  *baseAddress, long  numBytes);
 void    FillMem(void  *baseAddress, long  numBytes);
+void    TestMalloc(void *baseAddress);
 
 
 // type definitions
@@ -49,6 +50,7 @@ int     main(void)
     printf("How many doubles? ");
     scanf("%d", &numElems);
     dPtr = (double*)malloc(numElems * sizeof(double));
+	TestMalloc(dPtr);
     puts("Here's a dynamic array of doubles...");
     FillMem(dPtr, numElems * sizeof(double));
     DumpMem(dPtr, numElems * sizeof(double));
@@ -57,6 +59,7 @@ int     main(void)
     printf("How many chars? ");
     scanf("%d", &numElems);
     cPtr = (char*)malloc(numElems * sizeof(char));
+	TestMalloc(cPtr);
 	puts("Here's a dynamic array of chars...");
 	FillMem(cPtr, numElems * sizeof(char));
     DumpMem(cPtr, numElems * sizeof(char));
@@ -65,6 +68,7 @@ int     main(void)
     printf("How many ints? ");
     scanf("%d", &numElems);
     iPtr = (int*)malloc(numElems * sizeof(int));
+	TestMalloc(iPtr);
     puts("Here's a dynamic array of ints...");
     FillMem(iPtr, numElems * sizeof(int));
     DumpMem(iPtr, numElems * sizeof(int));
@@ -181,3 +185,13 @@ void    FillMem(void  *baseAddress, long  numBytes)
 		*(inputArray + index) = rand();
 	 }
 }  // end of "FillMem"
+
+
+void    TestMalloc(void *baseAddress)
+{
+	if(baseAddress == NULL)
+	{
+		printf("Malloc returned NULL");
+		exit(EXIT_FAILURE);
+	}
+}
